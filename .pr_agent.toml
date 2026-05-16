@@ -14,71 +14,50 @@ enable_intro_text = false
 enable_help_text = false
 final_update_message = false
 num_max_findings = 50
+review_mode = "BE"
+tcct_report_format = true
+tcct_report_checklist = [
+  { category = "Chất lượng & logic code", item = "Logic rõ ràng, không dư thừa" },
+  { category = "Chất lượng & logic code", item = "Tên biến, tên hàm, tên file có ý nghĩa" },
+  { category = "Chất lượng & logic code", item = "Tránh lặp code - đã tách thành hàm/chung logic" },
+  { category = "Chất lượng & logic code", item = "Code dễ đọc, dễ hiểu" },
+  { category = "Chất lượng & logic code", item = "Không sử dụng magic number/string" },
+  { category = "Cấu trúc & tổ chức file", item = "Cấu trúc thư mục hợp lý theo kiến trúc dự án" },
+  { category = "Cấu trúc & tổ chức file", item = "Đặt file đúng module/layer" },
+  { category = "Cấu trúc & tổ chức file", item = "Không có file hoặc function không sử dụng" },
+  { category = "Cấu trúc & tổ chức file", item = "Code được chia nhỏ hợp lý" },
+  { category = "Hiệu năng", item = "Tối ưu vòng lặp, truy vấn, xử lý dữ liệu" },
+  { category = "Hiệu năng", item = "Không gây N+1 query" },
+  { category = "Hiệu năng", item = "Không tạo object/tính toán không cần thiết" },
+  { category = "Hiệu năng", item = "Xử lý async hợp lý" },
+  { category = "Bảo mật", item = "Validate input người dùng" },
+  { category = "Bảo mật", item = "Không để lộ key/token/mật khẩu trong code" },
+  { category = "Bảo mật", item = "Dùng ENV cho thông tin nhạy cảm" },
+  { category = "Bảo mật", item = "Tránh SQL Injection" },
+  { category = "Bảo mật", item = "Không log dữ liệu nhạy cảm" },
+  { category = "Xử lý lỗi", item = "Xử lý các case lỗi đầy đủ" },
+  { category = "Xử lý lỗi", item = "Sử dụng try/catch hoặc middleware" },
+  { category = "Xử lý lỗi", item = "Đẩy ra code lỗi và thống nhất với FE map thông điệp cụ thể" },
+  { category = "Style Guide", item = "Format code đúng chuẩn" },
+  { category = "Style Guide", item = "Dùng style thống nhất trong team" },
+  { category = "Style Guide", item = "Không có code comment thừa" },
+  { category = "Tính mở rộng", item = "Code dễ mở rộng về sau" },
+  { category = "Tính mở rộng", item = "Không hard-code Tiếng Việt, sử dụng i18n (thông qua file message.properties) để map key" },
+  { category = "Tính mở rộng", item = "Dùng đúng design pattern" },
+  { category = "Tính mở rộng", item = "Không còn duplication/unreachable code" },
+  { category = "Backend", item = "API đúng format trả về (ApiResponse)" },
+  { category = "Backend", item = "Đặt tên endpoint đúng RESTful mà framework đã gen code" },
+  { category = "Backend", item = "Validation đầu vào đủ" },
+  { category = "Backend", item = "Check quyền đầy đủ cho mỗi request sử dụng VAuthz" },
+  { category = "Backend", item = "Logging + error tracking hợp lý" },
+  { category = "Backend", item = "Tối ưu cache/timeout" },
+  { category = "Unit test", item = "Tối thiểu 50%" },
+]
+extra_instructions = ""
 
-extra_instructions = """
+[review_rules]
+be = """\
 Bạn là Senior Java/Spring Boot source-code reviewer, review theo style report của folder tcct-be.
-
-Chỉ trả output cuối cùng theo đúng 2 phần bên dưới. Không thêm executive summary, severity table,
-top risks, assumptions, acceptance conclusion, câu mở đầu, câu kết, hoặc bảng phụ.
-
-## Checklist
-
-| Category | Checklist Item | Kết quả | Chi tiết |
-|---|---|---|---|
-
-## Chi tiết cần sửa
-
-| STT | Vấn đề | File | Dòng |
-|---|---|---|---|
-
-Quy tắc output:
-- Ngôn ngữ: tiếng Việt.
-- Cột `Kết quả` chỉ dùng `Pass` hoặc `Fail`. Không dùng `Manual`, `N/A`, `Not checked`, hoặc để trống.
-- `Checklist` phải được điền đầy đủ theo danh sách checklist bên dưới.
-- `Chi tiết cần sửa` chỉ chứa issue có bằng chứng file/dòng cụ thể trong diff hoặc context liên quan.
-- Mỗi dòng issue là một vấn đề cụ thể, có file và dòng nhỏ nhất hữu ích.
-- Không gộp nhiều lỗi không liên quan vào một dòng. Không dùng mô tả mơ hồ như "nhiều chỗ" nếu không có dòng evidence.
-- Một checklist `Fail` phải có ít nhất một dòng tương ứng trong `Chi tiết cần sửa`, trừ khi lỗi là thiếu bằng chứng bắt buộc trong PR như thiếu test/coverage.
-- Nếu không tìm thấy bằng chứng lỗi cho một checklist item, đánh `Pass` và để `Chi tiết` ngắn gọn.
-
-Checklist bắt buộc:
-| Category | Checklist Item | Kết quả | Chi tiết |
-|---|---|---|---|
-| Chất lượng & logic code | Logic rõ ràng, không dư thừa | Pass/Fail | |
-| Chất lượng & logic code | Tên biến, tên hàm, tên file có ý nghĩa | Pass/Fail | |
-| Chất lượng & logic code | Tránh lặp code - đã tách thành hàm/chung logic | Pass/Fail | |
-| Chất lượng & logic code | Code dễ đọc, dễ hiểu | Pass/Fail | |
-| Chất lượng & logic code | Không sử dụng magic number/string | Pass/Fail | |
-| Cấu trúc & tổ chức file | Cấu trúc thư mục hợp lý theo kiến trúc dự án | Pass/Fail | |
-| Cấu trúc & tổ chức file | Đặt file đúng module/layer | Pass/Fail | |
-| Cấu trúc & tổ chức file | Không có file hoặc function không sử dụng | Pass/Fail | |
-| Cấu trúc & tổ chức file | Code được chia nhỏ hợp lý | Pass/Fail | |
-| Hiệu năng | Tối ưu vòng lặp, truy vấn, xử lý dữ liệu | Pass/Fail | |
-| Hiệu năng | Không gây N+1 query | Pass/Fail | |
-| Hiệu năng | Không tạo object/tính toán không cần thiết | Pass/Fail | |
-| Hiệu năng | Xử lý async hợp lý | Pass/Fail | |
-| Bảo mật | Validate input người dùng | Pass/Fail | |
-| Bảo mật | Không để lộ key/token/mật khẩu trong code | Pass/Fail | |
-| Bảo mật | Dùng ENV cho thông tin nhạy cảm | Pass/Fail | |
-| Bảo mật | Tránh SQL Injection | Pass/Fail | |
-| Bảo mật | Không log dữ liệu nhạy cảm | Pass/Fail | |
-| Xử lý lỗi | Xử lý các case lỗi đầy đủ | Pass/Fail | |
-| Xử lý lỗi | Sử dụng try/catch hoặc middleware | Pass/Fail | |
-| Xử lý lỗi | Đẩy ra code lỗi và thống nhất với FE map thông điệp cụ thể | Pass/Fail | |
-| Style Guide | Format code đúng chuẩn | Pass/Fail | |
-| Style Guide | Dùng style thống nhất trong team | Pass/Fail | |
-| Style Guide | Không có code comment thừa | Pass/Fail | |
-| Tính mở rộng | Code dễ mở rộng về sau | Pass/Fail | |
-| Tính mở rộng | Không hard-code Tiếng Việt, sử dụng i18n (thông qua file message.properties) để map key | Pass/Fail | |
-| Tính mở rộng | Dùng đúng design pattern | Pass/Fail | |
-| Tính mở rộng | Không còn duplication/unreachable code | Pass/Fail | |
-| Backend | API đúng format trả về (ApiResponse) | Pass/Fail | |
-| Backend | Đặt tên endpoint đúng RESTful mà framework đã gen code | Pass/Fail | |
-| Backend | Validation đầu vào đủ | Pass/Fail | |
-| Backend | Check quyền đầy đủ cho mỗi request sử dụng VAuthz | Pass/Fail | |
-| Backend | Logging + error tracking hợp lý | Pass/Fail | |
-| Backend | Tối ưu cache/timeout | Pass/Fail | |
-| Unit test | Tối thiểu 50% | Pass/Fail | |
 
 Ưu tiên review:
 - Security: thiếu authentication/authorization, IDOR, parameter tampering, tenant/project/department isolation, dữ liệu nhạy cảm bị trả về/log, hard-code secret, SQL/JPQL injection, SSRF, upload/download unsafe, CORS quá rộng.
@@ -87,9 +66,17 @@ Checklist bắt buộc:
 - Performance: N+1 query, DB/external call trong loop, materialize toàn bộ dữ liệu, export/import nặng memory, thiếu batch query/cache/timeout.
 - Spring/MVC architecture: controller chứa business logic, service phụ thuộc controller, service làm trách nhiệm repository/controller, transaction boundary sai, exception handling không thống nhất.
 - Maintainability: duplicate logic, magic string/number, long method, nhiều responsibility, unused function, hard-code config, naming không theo convention.
+"""
 
-Format dòng issue:
-- `Vấn đề`: mô tả ngắn, nêu rủi ro và hướng sửa trong cùng câu nếu cần.
-- `File`: dùng path repo-relative.
-- `Dòng`: dùng số dòng hoặc range dòng cụ thể, ví dụ `42` hoặc `42-57`.
+fe = """\
+Bạn là Senior Frontend reviewer.
+
+Ưu tiên review:
+- Component design: single responsibility, prop drilling, reusable components, composition patterns.
+- State management: global vs local state, immutability, unnecessary re-renders, state synchronization.
+- Performance: memoization, lazy loading, bundle size, image optimization, virtual DOM efficiency.
+- Accessibility: ARIA attributes, keyboard navigation, screen reader support, color contrast.
+- Responsive: mobile-first, cross-browser compatibility, breakpoint consistency.
+- Security: XSS prevention in templates, safe DOM manipulation, CSP compliance, no secrets in client code.
+- API integration: error handling, loading states, cancellation, retry logic, consistent data fetching patterns.
 """
