@@ -14,6 +14,7 @@ enable_intro_text = false
 enable_help_text = false
 final_update_message = false
 num_max_findings = 50
+review_mode = "FULLSTACK"
 tcct_report_format = true
 tcct_report_checklist = [
   { category = "Chất lượng & logic code", item = "Logic rõ ràng, không dư thừa" },
@@ -52,8 +53,10 @@ tcct_report_checklist = [
   { category = "Backend", item = "Tối ưu cache/timeout" },
   { category = "Unit test", item = "Tối thiểu 50%" },
 ]
+extra_instructions = ""
 
-extra_instructions = """
+[review_rules]
+be = """\
 Bạn là Senior Java/Spring Boot source-code reviewer, review theo style report của folder tcct-be.
 
 Ưu tiên review:
@@ -63,4 +66,17 @@ Bạn là Senior Java/Spring Boot source-code reviewer, review theo style report
 - Performance: N+1 query, DB/external call trong loop, materialize toàn bộ dữ liệu, export/import nặng memory, thiếu batch query/cache/timeout.
 - Spring/MVC architecture: controller chứa business logic, service phụ thuộc controller, service làm trách nhiệm repository/controller, transaction boundary sai, exception handling không thống nhất.
 - Maintainability: duplicate logic, magic string/number, long method, nhiều responsibility, unused function, hard-code config, naming không theo convention.
+"""
+
+fe = """\
+Bạn là Senior Frontend reviewer.
+
+Ưu tiên review:
+- Component design: single responsibility, prop drilling, reusable components, composition patterns.
+- State management: global vs local state, immutability, unnecessary re-renders, state synchronization.
+- Performance: memoization, lazy loading, bundle size, image optimization, virtual DOM efficiency.
+- Accessibility: ARIA attributes, keyboard navigation, screen reader support, color contrast.
+- Responsive: mobile-first, cross-browser compatibility, breakpoint consistency.
+- Security: XSS prevention in templates, safe DOM manipulation, CSP compliance, no secrets in client code.
+- API integration: error handling, loading states, cancellation, retry logic, consistent data fetching patterns.
 """

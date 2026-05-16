@@ -1,9 +1,11 @@
 # du-test-qodo
-du test qodo
 
-## MVC sample handover features
+Repo chia thành 2 phần trong cùng repository:
 
-This branch contains an intentionally vulnerable MVC-style backend sample for PR-Agent review testing.
+- `backend/` — Spring Boot MVC sample (intentionally vulnerable for PR-Agent review testing)
+- `frontend/` — React vibe app đơn giản
+
+## Backend
 
 Project layers:
 
@@ -26,3 +28,22 @@ Intentional review cases include hard-coded secrets, IDOR, parameter tampering, 
 SSRF, excessive data exposure, sensitive logging, direct model binding, missing validation, controller business logic,
 service-to-controller dependency, weak status naming, non-UUID IDs, missing audit ownership fields,
 unsafe file path handling, unpaged document queries, and bulk sharing with query-in-loop behavior.
+
+## Frontend
+
+React + Vite app đơn giản:
+
+- `src/App.jsx` — User list view với fetch từ backend API.
+- `src/index.css` — Basic styling.
+
+Chạy dev:
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+Build:
+```bash
+npm run build
+```
