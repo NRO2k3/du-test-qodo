@@ -14,7 +14,7 @@ enable_intro_text = false
 enable_help_text = false
 final_update_message = false
 num_max_findings = 50
-review_mode = "FULLSTACK"
+review_mode = "FE"
 tcct_report_format = true
 tcct_report_checklist = [
   { category = "Chất lượng & logic code", item = "Logic rõ ràng, không dư thừa" },
